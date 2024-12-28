@@ -5,6 +5,7 @@ import Home from './Pages/HomePage'
 import DetailsPage from './Pages/DetailsPage';
 import SignupPage  from './Pages/SignupPage';
 import LoginPage from './Pages/LoginPage';
+import AddListing from './Pages/AddListingPage';
 
 const AddReview = () => <h1>Add Review</h1>;
 
@@ -17,6 +18,7 @@ const App = () => {
           <Route path="/" element={<Home />} />
           <Route path="/details/:id" element={<DetailsPage />} />
           <Route path="/addReview" element={<AddReview />} />
+          <Route path="/addListing" element={<AddListing />} />
           <Route path="/Signup" element={<SignupPage  />} />
           <Route path="/Login" element={<LoginPage  />} />
         </Routes>

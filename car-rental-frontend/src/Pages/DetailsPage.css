@@ -1,0 +1,64 @@
+/* DetailsPage.css */
+
+.details-container {
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  background-color: #f9f9f9;
+}
+
+.details-title {
+  font-size: 2rem;
+  color: #333;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.details-info {
+  font-size: 1.2rem;
+  color: #555;
+  margin: 10px 0;
+}
+
+.details-images {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 20px;
+  justify-content: center;
+}
+
+.details-image {
+  width: 200px;
+  height: 150px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  object-fit: cover;
+}
+
+.details-button {
+  margin: 10px;
+  padding: 10px 20px;
+  font-size: 1rem;
+  color: #fff;
+  background-color: #007bff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.details-button:hover {
+  background-color: #0056b3;
+}
+
+.details-rent-button {
+  background-color: #28a745;
+}
+
+.details-rent-button:hover {
+  background-color: #218838;
+}

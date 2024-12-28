@@ -22,9 +22,14 @@ const Navbar = () => {
           Home
         </Link>
         {user && (
-          <Link to="/addReview" className="navbar-link">
-            Add Review
-          </Link>
+          <>
+            <Link to="/addListing" className="navbar-link">
+              Add Listing
+            </Link>
+            <Link to="/addReview" className="navbar-link">
+              Add Review
+            </Link>
+          </>
         )}
       </div>
 

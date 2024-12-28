@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
+import { useNavigate } from 'react-router-dom';
 import { getAllCars } from '../services/carService';
+import './HomePage.css'; // Import the CSS file
 
 const HomePage = () => {
   const [cars, setCars] = useState([]);
-  const navigate = useNavigate(); // Initialize navigate
+  const navigate = useNavigate(); 
 
   useEffect(() => {
     const fetchCars = async () => {
@@ -20,23 +21,32 @@ const HomePage = () => {
   }, []);
 
   const handleDetailsClick = (id) => {
-    navigate(`/details/${id}`); // Navigate to the Details page
+    navigate(`/details/${id}`); 
   };
 
   return (
-    <div>
-      <h1>Available Cars</h1>
-      <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+    <div className="home-container">
+      <h1 className="home-title">Available Cars</h1>
+      <div className="home-cars-grid">
         {cars.map((car) => (
-          <div key={car._id} style={{ border: '1px solid #ccc', margin: '10px', padding: '10px' }}>
-            <h2>{car.name}</h2>
-            <p>Type: {car.type}</p>
-            <p>Price: ${car.price} per day</p>
-            <p>{car.description}</p>
+          <div key={car._id} className="home-car-card">
+            <h2 className="home-car-name">{car.name}</h2>
+            <p className="home-car-info"><strong>Type:</strong> {car.type}</p>
+            <p className="home-car-info"><strong>Price:</strong> ${car.price} per day</p>
+            <p className="home-car-description">{car.description}</p>
             {car.pictures && car.pictures.length > 0 && (
-              <img src={car.pictures[0]} alt={car.name} style={{ width: '200px', height: '150px' }} />
+              <img
+                src={car.pictures[0]}
+                alt={car.name}
+                className="home-car-image"
+              />
             )}
-            <button onClick={() => handleDetailsClick(car._id)}>Details</button> {/* Add Details Button */}
+            <button
+              className="home-details-button"
+              onClick={() => handleDetailsClick(car._id)}
+            >
+              Details
+            </button>
           </div>
         ))}
       </div>
