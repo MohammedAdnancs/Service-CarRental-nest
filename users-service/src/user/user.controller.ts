@@ -8,19 +8,18 @@ export class UserController {
 
   // Register a new user
   @Post('register')
-  async register(@Body() body: { email: string; password: string }): Promise<any> {
+  async register(@Body() body: { email: string; password: string ,username:string , birthday:Date , phonenumber:string, national_id:string}): Promise<any> {
     console.log(body.email)
     console.log(body.password)
-
-    const newUser = await this.userService.signUpUser(body.email, body.password);
-    return { message: 'User registered successfully', user: newUser };
+    const newUser = await this.userService.signUpUser(body.email, body.password ,body.username , body.birthday , body.phonenumber, body.national_id);
+    return {user: newUser };
   }
 
   // Login a user
   @Post('login')
   async login(@Body() body: { email: string; password: string }): Promise<any> {
-    const isValid = await this.userService.loginUser(body.email, body.password);
-    return isValid? { message: 'Login successful' } : { message: 'wrong username or password' };
+    const userProfile = await this.userService.loginUser(body.email, body.password);
+    return userProfile? { userProfile:userProfile} : { message: 'wrong username or password' };
   }
 
 }
