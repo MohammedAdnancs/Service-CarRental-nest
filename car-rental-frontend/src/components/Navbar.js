@@ -8,7 +8,7 @@ const Navbar = () => {
     <nav style={{ display: 'flex', justifyContent: 'space-between', padding: '10px', backgroundColor: '#333', color: '#fff' }}>
       <div>
         <Link to="/" style={{ color: '#fff', marginRight: '15px', textDecoration: 'none' }}>Home</Link>
-        <Link to="/about" style={{ color: '#fff', marginRight: '15px', textDecoration: 'none' }}>About Us</Link>
+        <Link to="/addReview" style={{ color: '#fff', marginRight: '15px', textDecoration: 'none' }}>Add Review</Link>
       </div>
       <div>
         <Link to="/login" style={{ color: '#fff', textDecoration: 'none' }}>Login</Link>
