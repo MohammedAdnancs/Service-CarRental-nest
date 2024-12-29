@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import { getCarById } from '../services/carService';
 import axios from 'axios'; // Axios for API calls
 import './DetailsPage.css';
+import '@fortawesome/fontawesome-free/css/all.min.css';
 
 const DetailsPage = () => {
   const { id } = useParams();
@@ -10,6 +11,8 @@ const DetailsPage = () => {
   const [showPopup, setShowPopup] = useState(false); // State to toggle popup visibility
   const [review, setReview] = useState(''); // State to store review text
   const [reviews, setReviews] = useState([]); // State to store reviews
+  const [hoveredStar, setHoveredStar] = useState(0); // Hovered star for preview
+  const [selectedStar, setSelectedStar] = useState(0); // Selected star rating
 
   // Retrieve user data from session storage
   const user = JSON.parse(sessionStorage.getItem('userProfile'));
@@ -26,7 +29,9 @@ const DetailsPage = () => {
 
     const fetchReviews = async () => {
       try {
-        const response = await axios.get('http://localhost:3006/reviews/getallreviews');
+        const response = await axios.get('http://localhost:3006/reviews/getallreviews', {
+          params: { productId: id },
+        });
         setReviews(response.data);
       } catch (error) {
         console.error('Error fetching reviews:', error);
@@ -45,7 +50,7 @@ const DetailsPage = () => {
 
     try {
       await axios.post('http://localhost:3005/cart/add', {
-        userEmail: user.email, // Extract userId from userProfile
+        userEmail: user.email,
         carId: car._id,
         name: car.name,
         type: car.type,
@@ -62,6 +67,23 @@ const DetailsPage = () => {
     }
   };
 
+  const renderStars = () => {
+    const stars = [];
+    const totalStars = 5;
+    for (let i = 1; i <= totalStars; i++) {
+      stars.push(
+        <i
+          key={i}
+          className={`fas fa-star ${i <= (hoveredStar || selectedStar) ? 'filled-star' : ''}`}
+          onMouseEnter={() => setHoveredStar(i)}
+          onMouseLeave={() => setHoveredStar(0)}
+          onClick={() => setSelectedStar(i)}
+        ></i>
+      );
+    }
+    return stars;
+  };
+
   const handleAddReview = async () => {
     if (!user) {
       alert('Please log in to add a review!');
@@ -73,12 +95,14 @@ const DetailsPage = () => {
         productId: car._id,
         useremail: user.email,
         Review: review,
+        rating: selectedStar, // Send the selected star rating
         productName: car.name,
         sellerName: car.seller,
       });
       alert('Review added successfully!');
       setShowPopup(false); // Close the popup after submitting
       setReview(''); // Clear the review input
+      setSelectedStar(0); // Reset star rating
       // Refresh the reviews list
       const response = await axios.get('http://localhost:3006/reviews/getallreviews', {
         params: { productId: id },
@@ -144,6 +168,7 @@ const DetailsPage = () => {
         <div className="popup-overlay">
           <div className="popup">
             <h2>Add Your Review</h2>
+            <div className="stars-container">{renderStars()}</div>
             <textarea
               value={review}
               onChange={(e) => setReview(e.target.value)}
@@ -178,6 +203,7 @@ const DetailsPage = () => {
             <div key={index} className="review-card">
               <p><strong>User:</strong> {review.useremail}</p>
               <p><strong>Review:</strong> {review.Review}</p>
+              <p><strong>Rating:</strong> {'⭐'.repeat(review.rating)}</p>
             </div>
           ))
         ) : (

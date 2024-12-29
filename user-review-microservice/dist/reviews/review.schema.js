@@ -35,6 +35,10 @@ __decorate([
     (0, mongoose_1.Prop)({ required: true }),
     __metadata("design:type", String)
 ], Review.prototype, "Review", void 0);
+__decorate([
+    (0, mongoose_1.Prop)({ required: true }),
+    __metadata("design:type", Number)
+], Review.prototype, "rating", void 0);
 exports.Review = Review = __decorate([
     (0, mongoose_1.Schema)()
 ], Review);

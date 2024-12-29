@@ -134,3 +134,10 @@
 .review-card p {
   margin: 5px 0;
 }
+.filled-star {
+  color: gold;
+}
+
+.stars-container {
+  margin-bottom: 10px;
+}
