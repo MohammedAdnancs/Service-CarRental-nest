@@ -9,48 +9,57 @@ export class CartService {
     @InjectModel('CartItem') private readonly cartModel: Model<CartItem>,
   ) {}
 
-  // Add a car to the cart with full car data
   async addToCart(
-    name: string, 
-    type: string, 
-    price: number, 
-    description: string, 
-    seller: string, 
-    pictures: string[], 
+    email: string,
+    carId: string,
+    name: string,
+    type: string,
+    price: number,
+    description: string,
+    seller: string,
+    pictures: string[],
   ): Promise<CartItem> {
-   
     const newCartItem = new this.cartModel({
-      
+      email,
+      carId,
       name,
       type,
       price,
       description,
       seller,
-      pictures
+      pictures,
     });
 
     return await newCartItem.save();
   }
 
-  // Get all items in the cart
-  async getCart(): Promise<CartItem[]> {
-    return await this.cartModel.find().exec();
+  async getCart(email: string): Promise<CartItem[]> {
+    return await this.cartModel.find({ email }).exec();
   }
 
-  // Update the quantity of a cart item
-  async updateQuantity(id: string, quantity: number): Promise<CartItem> {
-    return await this.cartModel
-      .findByIdAndUpdate(id, { quantity }, { new: true })
-      .exec();
-  }
-
-  // Remove a cart item by ID
   async removeItem(id: string): Promise<void> {
     await this.cartModel.findByIdAndDelete(id).exec();
   }
 
-  // Clear all items from the cart
-  async clearCart(): Promise<void> {
-    await this.cartModel.deleteMany().exec();
+  async clearCart(email: string): Promise<void> {
+    try {
+      // Find all items by email
+      const cartItems = await this.cartModel.find({ email }).exec();
+      
+      if (cartItems.length === 0) {
+        throw new Error('No items found to delete');
+      }
+  
+      // Delete each item by its _id
+      const deletePromises = cartItems.map(item => this.cartModel.findByIdAndDelete(item._id).exec());
+      await Promise.all(deletePromises); // Wait for all deletions to complete
+  
+      console.log(`${cartItems.length} items deleted from the cart.`);
+    } catch (error) {
+      console.error('Error clearing cart:', error);
+      throw new Error('Failed to clear cart');
+    }
   }
+  
+  
 }

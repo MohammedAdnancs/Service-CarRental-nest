@@ -1,14 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.CartModel = exports.CartItemSchema = void 0;
+exports.CartItemSchema = void 0;
 const mongoose_1 = require("mongoose");
 exports.CartItemSchema = new mongoose_1.Schema({
-    name: { type: String, required: false },
-    type: { type: String, required: false },
-    price: { type: Number, required: false },
-    description: { type: String, required: false },
-    seller: { type: String, required: false },
-    pictures: { type: [String], default: [] },
+    email: { type: String, required: false },
+    carId: { type: String, required: true },
+    name: { type: String, required: true },
+    type: { type: String, required: true },
+    price: { type: Number, required: true },
+    description: { type: String, required: true },
+    seller: { type: String, required: true },
+    pictures: { type: [String], required: true },
 });
-exports.CartModel = (0, mongoose_1.model)('CartItem', exports.CartItemSchema);
 //# sourceMappingURL=cart.model.js.map

@@ -1,21 +1,23 @@
-import { Schema, Document, model } from 'mongoose';
+import { Schema, Document } from 'mongoose';
 
 export interface CartItem extends Document {
-  name: string;           // Name of the car
-  type: string;           // Type of car (e.g., SUV, Sedan)
-  price: number;          // Price per day
-  description: string;    // Description of the car
-  seller: string;         // Seller name
-  pictures: string[];     // Array of picture URLs
+  email: string;
+  carId: string;
+  name: string;
+  type: string;
+  price: number;
+  description: string;
+  seller: string;
+  pictures: string[];
 }
 
-export const CartItemSchema = new Schema({
-  name: { type: String, required: false },
-  type: { type: String, required: false },
-  price: { type: Number, required: false },
-  description: { type: String, required: false },
-  seller: { type: String, required: false },
-  pictures: { type: [String], default: [] },
+export const CartItemSchema = new Schema<CartItem>({
+  email: { type: String, required: false },
+  carId: { type: String, required: true },
+  name: { type: String, required: true },
+  type: { type: String, required: true },
+  price: { type: Number, required: true },
+  description: { type: String, required: true },
+  seller: { type: String, required: true },
+  pictures: { type: [String], required: true },
 });
-
-export const CartModel = model<CartItem>('CartItem', CartItemSchema);

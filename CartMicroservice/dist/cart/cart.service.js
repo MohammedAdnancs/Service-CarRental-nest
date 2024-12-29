@@ -20,30 +20,39 @@ let CartService = class CartService {
     constructor(cartModel) {
         this.cartModel = cartModel;
     }
-    async addToCart(name, type, price, description, seller, pictures) {
+    async addToCart(email, carId, name, type, price, description, seller, pictures) {
         const newCartItem = new this.cartModel({
+            email,
+            carId,
             name,
             type,
             price,
             description,
             seller,
-            pictures
+            pictures,
         });
         return await newCartItem.save();
     }
-    async getCart() {
-        return await this.cartModel.find().exec();
-    }
-    async updateQuantity(id, quantity) {
-        return await this.cartModel
-            .findByIdAndUpdate(id, { quantity }, { new: true })
-            .exec();
+    async getCart(email) {
+        return await this.cartModel.find({ email }).exec();
     }
     async removeItem(id) {
         await this.cartModel.findByIdAndDelete(id).exec();
     }
-    async clearCart() {
-        await this.cartModel.deleteMany().exec();
+    async clearCart(email) {
+        try {
+            const cartItems = await this.cartModel.find({ email }).exec();
+            if (cartItems.length === 0) {
+                throw new Error('No items found to delete');
+            }
+            const deletePromises = cartItems.map(item => this.cartModel.findByIdAndDelete(item._id).exec());
+            await Promise.all(deletePromises);
+            console.log(`${cartItems.length} items deleted from the cart.`);
+        }
+        catch (error) {
+            console.error('Error clearing cart:', error);
+            throw new Error('Failed to clear cart');
+        }
     }
 };
 exports.CartService = CartService;

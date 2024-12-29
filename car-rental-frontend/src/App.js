@@ -6,6 +6,7 @@ import DetailsPage from './Pages/DetailsPage';
 import SignupPage  from './Pages/SignupPage';
 import LoginPage from './Pages/LoginPage';
 import AddListing from './Pages/AddListingPage';
+import CartPage from './Pages/CartPage'
 
 const AddReview = () => <h1>Add Review</h1>;
 
@@ -21,6 +22,8 @@ const App = () => {
           <Route path="/addListing" element={<AddListing />} />
           <Route path="/Signup" element={<SignupPage  />} />
           <Route path="/Login" element={<LoginPage  />} />
+          <Route path="/cart" element={<CartPage />} />
+          
         </Routes>
       </div>
     </Router>

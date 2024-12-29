@@ -1,11 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { getCarById } from '../services/carService'; 
+import { getCarById } from '../services/carService';
+import axios from 'axios'; // Axios for API calls
 import './DetailsPage.css';
 
 const DetailsPage = () => {
-  const { id } = useParams(); 
+  const { id } = useParams();
   const [car, setCar] = useState(null);
+
+  // Retrieve user data from session storage
+  const user = JSON.parse(sessionStorage.getItem('userProfile'));
 
   useEffect(() => {
     const fetchCarDetails = async () => {
@@ -19,6 +23,32 @@ const DetailsPage = () => {
 
     fetchCarDetails();
   }, [id]);
+
+  const handleRentCar = async () => {
+    console.log(user.email)
+    if (!user) {
+      alert('Please log in to rent a car!');
+      return;
+    }
+
+    try {
+      await axios.post('http://localhost:3005/cart/add', {
+        userEmail: user.email, // Extract userId from userProfile
+        carId: car._id,
+        name: car.name,
+        type: car.type,
+        price: car.price,
+        description: car.description,
+        seller: car.seller,
+        pictures: car.pictures,
+      });
+
+      alert('Car added to your cart successfully!');
+    } catch (error) {
+      console.error('Error adding car to cart:', error);
+      alert('Failed to add car to cart.');
+    }
+  };
 
   if (!car) {
     return <p>Loading...</p>;
@@ -48,7 +78,10 @@ const DetailsPage = () => {
       <button className="details-button" onClick={() => window.history.back()}>
         Back
       </button>
-      <button className="details-button details-rent-button">
+      <button
+        className="details-button details-rent-button"
+        onClick={handleRentCar}
+      >
         Rent
       </button>
     </div>
