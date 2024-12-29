@@ -4,15 +4,12 @@
   margin: 0 auto;
   padding: 20px;
   background: white;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-/* Title */
-.login-container h2 {
+.login-container h1 {
   text-align: center;
-  color: #333;
-  margin-bottom: 20px;
+  color: #4d4949;
+  margin-bottom: 7dvh;
 }
 
 /* Error messages */
@@ -36,6 +33,7 @@
   margin-bottom: 5px;
   font-weight: bold;
   color: #555;
+  margin-bottom: 1dvh;
 }
 
 .login-container input {
@@ -48,26 +46,9 @@
   font-size: 14px;
 }
 
-.login-container input:focus {
-  outline: none;
-  border-color: #0078ff;
-  box-shadow: 0 0 5px #0078ff;
-}
 
-/* Submit button */
 .login-container button {
-  width: 100%;
-  padding: 10px;
-  background-color: #0078ff;
-  color: white;
-  font-size: 16px;
-  border: none;
   border-radius: 5px;
-  cursor: pointer;
-}
-
-.login-container button:hover {
-  background-color: #005fcc;
 }
 
 /* Responsive design */
@@ -76,4 +57,19 @@
     padding: 15px;
     width: 90%;
   }
+}
+
+/* Remove background, text color changes, and box-shadow from autofill */
+input:-webkit-autofill {
+  background-color: transparent !important;
+  color: inherit !important;
+  box-shadow: 0 0 0px 1000px white inset !important; /* Set it to the field's normal background color */
+  -webkit-text-fill-color: inherit !important; /* Ensures the text color matches the rest */
+  transition: background-color 5000s ease-in-out 0s; /* Prevents flash of color */
+}
+
+/* Ensure autocomplete behaves consistently in other browsers (non-webkit) */
+input:-moz-autofill {
+  background-color: transparent !important;
+  color: inherit !important;
 }

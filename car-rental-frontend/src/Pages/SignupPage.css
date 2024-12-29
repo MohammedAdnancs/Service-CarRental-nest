@@ -8,6 +8,8 @@
   /* Title */
   .signup-container h1 {
     text-align: center;
+    margin-bottom: 7dvh;
+    color: #4d4949;
   }
   
   /* Error and success messages */
@@ -96,3 +98,26 @@
   .modal-content button:hover {
     background-color: #45a049;
   }
+
+  input[type="date"]::-webkit-datetime-edit {
+    color: transparent;
+  }
+
+input[type="date"]:valid::-webkit-datetime-edit {
+    color: black;
+}
+
+/* Remove background, text color changes, and box-shadow from autofill */
+input:-webkit-autofill {
+  background-color: transparent !important;
+  color: inherit !important;
+  box-shadow: 0 0 0px 1000px white inset !important; /* Set it to the field's normal background color */
+  -webkit-text-fill-color: inherit !important; /* Ensures the text color matches the rest */
+  transition: background-color 5000s ease-in-out 0s; /* Prevents flash of color */
+}
+
+/* Ensure autocomplete behaves consistently in other browsers (non-webkit) */
+input:-moz-autofill {
+  background-color: transparent !important;
+  color: inherit !important;
+}
