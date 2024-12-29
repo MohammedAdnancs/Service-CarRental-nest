@@ -26,9 +26,7 @@ const Navbar = () => {
             <Link to="/addListing" className="navbar-link">
               Add Listing
             </Link>
-            <Link to="/addReview" className="navbar-link">
-              Add Review
-            </Link>
+           
             <Link to="/cart" className="navbar-link">
               Cart
             </Link>

@@ -7,6 +7,9 @@ import './DetailsPage.css';
 const DetailsPage = () => {
   const { id } = useParams();
   const [car, setCar] = useState(null);
+  const [showPopup, setShowPopup] = useState(false); // State to toggle popup visibility
+  const [review, setReview] = useState(''); // State to store review text
+  const [reviews, setReviews] = useState([]); // State to store reviews
 
   // Retrieve user data from session storage
   const user = JSON.parse(sessionStorage.getItem('userProfile'));
@@ -21,11 +24,20 @@ const DetailsPage = () => {
       }
     };
 
+    const fetchReviews = async () => {
+      try {
+        const response = await axios.get('http://localhost:3006/reviews/getallreviews');
+        setReviews(response.data);
+      } catch (error) {
+        console.error('Error fetching reviews:', error);
+      }
+    };
+
     fetchCarDetails();
+    fetchReviews();
   }, [id]);
 
   const handleRentCar = async () => {
-    console.log(user.email)
     if (!user) {
       alert('Please log in to rent a car!');
       return;
@@ -47,6 +59,34 @@ const DetailsPage = () => {
     } catch (error) {
       console.error('Error adding car to cart:', error);
       alert('Failed to add car to cart.');
+    }
+  };
+
+  const handleAddReview = async () => {
+    if (!user) {
+      alert('Please log in to add a review!');
+      return;
+    }
+
+    try {
+      await axios.post('http://localhost:3006/reviews/add', {
+        productId: car._id,
+        useremail: user.email,
+        Review: review,
+        productName: car.name,
+        sellerName: car.seller,
+      });
+      alert('Review added successfully!');
+      setShowPopup(false); // Close the popup after submitting
+      setReview(''); // Clear the review input
+      // Refresh the reviews list
+      const response = await axios.get('http://localhost:3006/reviews/getallreviews', {
+        params: { productId: id },
+      });
+      setReviews(response.data);
+    } catch (error) {
+      console.error('Error adding review:', error);
+      alert('Failed to add review.');
     }
   };
 
@@ -84,6 +124,66 @@ const DetailsPage = () => {
       >
         Rent
       </button>
+      <button
+        className="details-button details-rent-button"
+        style={{
+          backgroundColor: '#1d1238',
+          color: 'white',
+          border: 'none',
+          padding: '10px 20px',
+          borderRadius: '5px',
+          cursor: 'pointer',
+        }}
+        onClick={() => setShowPopup(true)} // Show the popup
+      >
+        Add Review
+      </button>
+
+      {/* Popup for adding a review */}
+      {showPopup && (
+        <div className="popup-overlay">
+          <div className="popup">
+            <h2>Add Your Review</h2>
+            <textarea
+              value={review}
+              onChange={(e) => setReview(e.target.value)}
+              placeholder="Write your review here..."
+              rows="5"
+              cols="40"
+              className="popup-textarea"
+            />
+            <div className="popup-buttons">
+              <button
+                className="popup-button submit"
+                onClick={handleAddReview}
+              >
+                Submit
+              </button>
+              <button
+                className="popup-button cancel"
+                onClick={() => setShowPopup(false)} // Close the popup
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Reviews Section */}
+      <div className="reviews-section">
+        <h2>Reviews</h2>
+        {reviews.length > 0 ? (
+          reviews.map((review, index) => (
+            <div key={index} className="review-card">
+              <p><strong>User:</strong> {review.useremail}</p>
+              <p><strong>Review:</strong> {review.Review}</p>
+            </div>
+          ))
+        ) : (
+          <p>No reviews yet. Be the first to add one!</p>
+        )}
+      </div>
     </div>
   );
 };

@@ -1,9 +1,10 @@
 import { Document } from 'mongoose';
 export declare class Review extends Document {
-    userId: string;
+    useremail: string;
     productId: string;
-    rating: number;
-    comment: string;
+    productName: string;
+    sellerName: string;
+    Review: string;
 }
 export declare const ReviewSchema: import("mongoose").Schema<Review, import("mongoose").Model<Review, any, any, any, Document<unknown, any, Review> & Review & Required<{
     _id: unknown;
