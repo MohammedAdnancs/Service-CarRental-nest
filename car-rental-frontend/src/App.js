@@ -6,7 +6,8 @@ import DetailsPage from './Pages/DetailsPage';
 import SignupPage  from './Pages/SignupPage';
 import LoginPage from './Pages/LoginPage';
 import AddListing from './Pages/AddListingPage';
-import CartPage from './Pages/CartPage'
+import CartPage from './Pages/CartPage';
+import ComplainPage from './Pages/ComplainPage';
 
 const AddReview = () => <h1>Add Review</h1>;
 
@@ -19,6 +20,7 @@ const App = () => {
           <Route path="/" element={<Home />} />
           <Route path="/details/:id" element={<DetailsPage />} />
           <Route path="/addReview" element={<AddReview />} />
+          <Route path="/addComplain" element={<ComplainPage />} />
           <Route path="/addListing" element={<AddListing />} />
           <Route path="/Signup" element={<SignupPage  />} />
           <Route path="/Login" element={<LoginPage  />} />
