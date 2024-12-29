@@ -9,7 +9,7 @@ export class CarController {
   async searchCars(@Query() query: any) {
     try {
       const cars = await this.carService.searchCars(query);
-      return { status: 'success', data: cars };
+      return { data: cars };
     } catch (error) {
       return { status: 'error', message: error.message || 'An error occurred' };
     }
