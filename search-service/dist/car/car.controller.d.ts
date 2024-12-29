@@ -3,8 +3,8 @@ export declare class CarController {
     private readonly carService;
     constructor(carService: CarService);
     searchCars(query: any): Promise<{
-        status: string;
         data: import("./car.model").Car[];
+        status?: undefined;
         message?: undefined;
     } | {
         status: string;
