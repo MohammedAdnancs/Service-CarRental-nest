@@ -1,0 +1,65 @@
+nav {
+  background-color: #333;
+  color: white;
+  padding: 10px;
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+  margin-right: 15px;
+}
+
+nav a:hover {
+  text-decoration: underline;
+}
+
+/* Navbar container styles */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  padding: 15px;
+  background-color: #333;
+  color: #fff;
+}
+
+/* Left section links container */
+.navbar-left {
+  display: flex;
+  align-items: center;
+}
+
+/* General link styles */
+.navbar a {
+  color: #fff;
+  margin-right: 15px;
+  text-decoration: none;
+}
+
+/* Right section links container */
+.navbar-right {
+  display: flex;
+  align-items: center;
+}
+
+/* Logout button styles */
+.navbar-btn {
+  background-color: transparent;
+  color: #fff;
+  border: 1px solid #fff;
+  padding: 5px 10px;
+  cursor: pointer;
+  text-decoration: none;
+  border-radius: 3px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.navbar-btn:hover {
+  background-color: #fff;
+  color: #333;
+}
+
+/* Welcome message styles (optional) */
+.navbar-welcome {
+  margin-right: 15px;
+}

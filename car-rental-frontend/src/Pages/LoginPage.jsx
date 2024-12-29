@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom'; 
 import './Login.css'; // Import the CSS file
+import Button from '../components/Button/Button'; // Import the Button component
+import TextInputfield from '../components/Text_inputfield/TextInputfiled'; // Import the TextInputfield component
 
 const LoginPage = () => {
   const [email, setEmail] = useState('');
@@ -45,12 +47,13 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="signup-container">
+    <div className="login-container">
       <h1>Login</h1>
+
       <form onSubmit={handleLogin}>
         <div className="form-group">
-          <label htmlFor="email">Email:</label>
-          <input
+          
+          <TextInputfield
             type="email"
             id="email"
             value={email}
@@ -60,8 +63,8 @@ const LoginPage = () => {
           />
         </div>
         <div className="form-group">
-          <label htmlFor="password">Password:</label>
-          <input
+         
+          <TextInputfield
             type="password"
             id="password"
             value={password}
@@ -71,8 +74,9 @@ const LoginPage = () => {
           />
         </div>
         {error && <p className="error">{error}</p>}
-        <button type="submit">Login</button>
+        <Button  color= "#white" backgroundColor="#555" width="100%" height="5dvh" type="submit" text="Login" />
       </form>
+
     </div>
   );
 };

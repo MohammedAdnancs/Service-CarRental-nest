@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './Navbar.css'; // Import the CSS file
@@ -26,9 +27,7 @@ const Navbar = () => {
             <Link to="/addListing" className="navbar-link">
               Add Listing
             </Link>
-            <Link to="/addComplain" className="navbar-link">
-              Add Complain
-            </Link>
+           
             <Link to="/cart" className="navbar-link">
               Cart
             </Link>

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './SignupPage.css'; // Import the CSS file
-
+import Button from '../components/Button/Button'; // Import the Button component
+import TextInputfield from '../components/Text_inputfield/TextInputfiled'; // Import the TextInputfield component
 const SignupPage = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -65,9 +66,10 @@ const SignupPage = () => {
       {error && <p className="error">{error}</p>}
       <form onSubmit={handleSignup}>
         <div className="form-group">
-          <label htmlFor="email">Email:</label>
-          <input
+          
+          <TextInputfield
             type="email"
+            placeholder="Enter your Email"
             id="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
@@ -75,9 +77,10 @@ const SignupPage = () => {
           />
         </div>
         <div className="form-group">
-          <label htmlFor="username">Username:</label>
-          <input
+          
+          <TextInputfield
             type="text"
+            placeholder="Enter your Username"
             id="username"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
@@ -85,9 +88,10 @@ const SignupPage = () => {
           />
         </div>
         <div className="form-group">
-          <label htmlFor="phonenumber">Phone Number:</label>
-          <input
+          
+          <TextInputfield
             type="text"
+            placeholder="Enter your Phonenumber"
             id="phonenumber"
             value={phonenumber}
             onChange={(e) => setPhonenumber(e.target.value)}
@@ -95,9 +99,10 @@ const SignupPage = () => {
           />
         </div>
         <div className="form-group">
-          <label htmlFor="birthday">Birthday:</label>
-          <input
+          
+          <TextInputfield
             type="date"
+            placeholder="Enter your Birthday"
             id="birthday"
             value={birthday}
             onChange={(e) => setBirthday(e.target.value)}
@@ -105,9 +110,10 @@ const SignupPage = () => {
           />
         </div>
         <div className="form-group">
-          <label htmlFor="national_id">National ID:</label>
-          <input
+         
+          <TextInputfield
             type="text"
+            placeholder="Enter your National ID"
             id="national_id"
             value={national_id}
             onChange={(e) => setNational_id(e.target.value)}
@@ -115,8 +121,9 @@ const SignupPage = () => {
           />
         </div>
         <div className="form-group">
-          <label htmlFor="password">Password:</label>
-          <input
+          
+          <TextInputfield
+            placeholder="Enter your Password"
             type="password"
             id="password"
             value={password}
@@ -124,7 +131,7 @@ const SignupPage = () => {
             required
           />
         </div>
-        <button type="submit">Signup</button>
+        <Button  color= "#white" backgroundColor="#555" width="100%" height="5dvh" type="submit" text="SignUp" />
       </form>
 
       {/* Modal to display success message */}
