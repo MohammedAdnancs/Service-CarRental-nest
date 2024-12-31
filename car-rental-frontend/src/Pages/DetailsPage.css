@@ -141,3 +141,14 @@
 .stars-container {
   margin-bottom: 10px;
 }
+
+.details-delete-button {
+  background-color: red;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
