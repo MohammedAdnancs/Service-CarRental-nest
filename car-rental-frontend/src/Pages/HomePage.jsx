@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { getAllCars } from '../services/carService';
 import './HomePage.css'; // Import the CSS file
 import axios from 'axios';
+import TextInputfield from '../components/Text_inputfield/TextInputfiled'; // Import the TextInputfield component
+
 
 const HomePage = () => {
   const [cars, setCars] = useState([]);
@@ -89,31 +91,33 @@ const HomePage = () => {
 
       {/* Search Form */}
       <div className="search-form">
-        <input
-          type="text"
-          placeholder="Search by name"
-          value={searchName}
-          onChange={(e) => setSearchName(e.target.value)}
+        <TextInputfield
+            type="text"
+            value={searchName}
+            onChange={(e) => setSearchName(e.target.value)}
+            placeholder="Search by name"
+            required
         />
-        <input
-          type="text"
-          placeholder="Search by type"
-          value={searchType}
-          onChange={(e) => setSearchType(e.target.value)}
+        <TextInputfield
+            type="text"
+            value={searchType}
+            onChange={(e) => setSearchType(e.target.value)}
+            placeholder="Search by type"
+            required
         />
-        <input
-          type="number"
-          placeholder="Min price"
-          value={searchPriceMin}
-          onChange={(e) => setSearchPriceMin(e.target.value)}
-          min="0"
+        <TextInputfield
+            type="number"
+            value={searchPriceMin}
+            onChange={(e) => setSearchPriceMin(e.target.value)}
+            placeholder="Min price"
+            required
         />
-        <input
-          type="number"
-          placeholder="Max price"
-          value={searchPriceMax}
-          onChange={(e) => setSearchPriceMax(e.target.value)}
-          min="0"
+        <TextInputfield
+            type="number"
+            value={searchPriceMax}
+            onChange={(e) => setSearchPriceMax(e.target.value)}
+            placeholder="Max price"
+            required
         />
         </div>
         <div className="search-container">

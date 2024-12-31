@@ -66,7 +66,8 @@ const ComplainPage = () => {
 
   return (
     <div className="complain-container">
-      <h1>Your Complaints</h1>
+      <h1>Complaints</h1>
+      {(user.username != "admin") && (
       <div className="add-complaint">
         <textarea
           placeholder="Write your complaint here..."
@@ -75,6 +76,7 @@ const ComplainPage = () => {
         />
         <button onClick={handleAddComplaint}>Add Complaint</button>
       </div>
+      )}
       {complaints.length === 0 ? (
         <p>You have no complaints.</p>
       ) : (
@@ -97,7 +99,7 @@ const ComplainPage = () => {
               </div>
               <h3>Email: {complaint.useremail}</h3>
               <p className="complaint">Complaint: {complaint.complaint}</p>
-              {complaint.useremail === user.email && (
+              {(complaint.useremail === user.email || user.username == "admin") && (
                 <button onClick={() => handleRemoveComplaint(complaint._id)}>Remove Complaint</button>
               )}
             </li>

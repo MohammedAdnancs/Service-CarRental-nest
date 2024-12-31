@@ -105,4 +105,7 @@
   background-color: #cc3333; /* Darker red on hover */; /* Slightly darker red on hover */
 }
 
+.search-form{
+  display: flex;
+}
 
