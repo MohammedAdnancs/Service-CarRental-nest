@@ -21,6 +21,10 @@ export class ComplainService {
   async findByUserEmail(useremail: string): Promise<Complain[]> {
     return await this.complainModel.find({ useremail }).exec();
   }
+  async findByUserName(username: string): Promise<Complain[]> {
+    return await this.complainModel.find({ username }).exec();
+  }
+
 
   // Fetch a specific complaint by ID
   async findOne(id: string): Promise<Complain> {

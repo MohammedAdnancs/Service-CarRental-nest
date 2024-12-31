@@ -10,9 +10,7 @@ const ComplainPage = () => {
   useEffect(() => {
     const fetchComplaints = async () => {
       try {
-        const response = user.email
-          ? await axios.get(`http://localhost:3008/complain?useremail=${user.email}`)
-          : await axios.get('http://localhost:3008/complain');
+        const response = await axios.get('http://localhost:3008/complain');
         setComplaints(response.data);
       } catch (error) {
         console.error('Error fetching complaints:', error);
@@ -55,21 +53,14 @@ const ComplainPage = () => {
     }
   };
 
-  const handleClearComplaints = async () => {
-    if (!user.email) {
-      alert('User not found. Please log in again.');
-      return;
-    }
-
+  const handleEditComplaint = async (id, updatedText) => {
     try {
-      for (let complaint of complaints) {
-        await axios.delete(`http://localhost:3008/complain/${complaint._id}`);
-      }
-      setComplaints([]);
-      alert('All complaints cleared successfully!');
+      const updatedComplaint = { complaint: updatedText };
+      const response = await axios.put(`http://localhost:3008/complain/${id}`, updatedComplaint);
+      setComplaints(complaints.map((c) => (c._id === id ? response.data : c)));
+      alert('Complaint updated successfully!');
     } catch (error) {
-      console.error('Error clearing complaints:', error);
-      alert('Error clearing complaints. Please try again later.');
+      console.error('Error updating complaint:', error);
     }
   };
 
@@ -87,19 +78,31 @@ const ComplainPage = () => {
       {complaints.length === 0 ? (
         <p>You have no complaints.</p>
       ) : (
-        <div>
-          <ul>
-            {complaints.map((complaint) => (
-              <li key={complaint._id}>
+        <ul>
+          {complaints.map((complaint) => (
+            <li key={complaint._id}>
+              <div className="complaint-header">
                 <h2>{complaint.username}</h2>
-                <h3>Email: {complaint.useremail}</h3>
-                <p className="complaint">Complaint: {complaint.complaint}</p>
+                {complaint.useremail === user.email && (
+                  <button
+                    className="edit-icon"
+                    onClick={() => {
+                      const newText = prompt('Edit your complaint:', complaint.complaint);
+                      if (newText) handleEditComplaint(complaint._id, newText);
+                    }}
+                  >
+                    ✏️
+                  </button>
+                )}
+              </div>
+              <h3>Email: {complaint.useremail}</h3>
+              <p className="complaint">Complaint: {complaint.complaint}</p>
+              {complaint.useremail === user.email && (
                 <button onClick={() => handleRemoveComplaint(complaint._id)}>Remove Complaint</button>
-              </li>
-            ))}
-          </ul>
-          <button onClick={handleClearComplaints}>Clear All Complaints</button>
-        </div>
+              )}
+            </li>
+          ))}
+        </ul>
       )}
     </div>
   );
