@@ -6,7 +6,7 @@ import './DetailsPage.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 
 const DetailsPage = () => {
-  const { id } = useParams();
+  const { id } = useParams(); // Get the car ID from the URL
   const [car, setCar] = useState(null);
   const [showPopup, setShowPopup] = useState(false); // State to toggle popup visibility
   const [review, setReview] = useState(''); // State to store review text
@@ -17,6 +17,7 @@ const DetailsPage = () => {
   // Retrieve user data from session storage
   const user = JSON.parse(sessionStorage.getItem('userProfile'));
 
+  // Fetch car details and reviews on component load
   useEffect(() => {
     const fetchCarDetails = async () => {
       try {
@@ -42,6 +43,7 @@ const DetailsPage = () => {
     fetchReviews();
   }, [id]);
 
+  // Handle car rental
   const handleRentCar = async () => {
     if (!user) {
       alert('Please log in to rent a car!');
@@ -67,6 +69,43 @@ const DetailsPage = () => {
     }
   };
 
+  // Handle deleting a car listing
+  const handleDeleteCar = async () => {
+
+    if (!user) {
+      alert('You must be logged in to delete this listing.');
+      return;
+    }
+
+    const confirmDelete = window.confirm('Are you sure you want to delete this listing?');
+    if (!confirmDelete) return;
+
+    try {
+      console.log(car._id)
+      console.log('Deleting car with ID:', car._id);
+
+      const response = await axios.delete(`http://localhost:3004/car/${car._id}`, {
+        
+      });
+
+      console.log('Response from server:', response.data);
+      alert('Car listing deleted successfully!');
+      window.history.back(); // Redirect user to previous page
+    } catch (error) {
+      if (error.response) {
+        console.error('Error response:', error.response.data);
+        alert(`Failed to delete: ${error.response.data.message}`);
+      } else if (error.request) {
+        console.error('No response from server:', error.request);
+        alert('Failed to delete: No response from the server.');
+      } else {
+        console.error('Error:', error.message);
+        alert(`Failed to delete: ${error.message}`);
+      }
+    }
+  };
+
+  // Render star rating for reviews
   const renderStars = () => {
     const stars = [];
     const totalStars = 5;
@@ -84,6 +123,7 @@ const DetailsPage = () => {
     return stars;
   };
 
+  // Add a review
   const handleAddReview = async () => {
     if (!user) {
       alert('Please log in to add a review!');
@@ -95,15 +135,16 @@ const DetailsPage = () => {
         productId: car._id,
         useremail: user.email,
         Review: review,
-        rating: selectedStar, // Send the selected star rating
+        rating: selectedStar,
         productName: car.name,
         sellerName: car.seller,
       });
+
       alert('Review added successfully!');
-      setShowPopup(false); // Close the popup after submitting
-      setReview(''); // Clear the review input
-      setSelectedStar(0); // Reset star rating
-      // Refresh the reviews list
+      setShowPopup(false);
+      setReview('');
+      setSelectedStar(0);
+
       const response = await axios.get('http://localhost:3006/reviews/getallreviews', {
         params: { productId: id },
       });
@@ -142,12 +183,30 @@ const DetailsPage = () => {
       <button className="details-button" onClick={() => window.history.back()}>
         Back
       </button>
+
       <button
         className="details-button details-rent-button"
         onClick={handleRentCar}
       >
         Rent
       </button>
+
+      <button
+        className="details-button details-delete-button"
+        style={{
+          backgroundColor: 'red',
+          color: 'white',
+          border: 'none',
+          padding: '10px 20px',
+          borderRadius: '5px',
+          cursor: 'pointer',
+          marginTop: '10px',
+        }}
+        onClick={handleDeleteCar}
+      >
+        Delete Listing
+      </button>
+
       <button
         className="details-button details-rent-button"
         style={{
@@ -158,12 +217,11 @@ const DetailsPage = () => {
           borderRadius: '5px',
           cursor: 'pointer',
         }}
-        onClick={() => setShowPopup(true)} // Show the popup
+        onClick={() => setShowPopup(true)}
       >
         Add Review
       </button>
 
-      {/* Popup for adding a review */}
       {showPopup && (
         <div className="popup-overlay">
           <div className="popup">
@@ -186,7 +244,7 @@ const DetailsPage = () => {
               </button>
               <button
                 className="popup-button cancel"
-                onClick={() => setShowPopup(false)} // Close the popup
+                onClick={() => setShowPopup(false)}
               >
                 Cancel
               </button>
@@ -195,7 +253,6 @@ const DetailsPage = () => {
         </div>
       )}
 
-      {/* Reviews Section */}
       <div className="reviews-section">
         <h2>Reviews</h2>
         {reviews.length > 0 ? (
