@@ -67,9 +67,6 @@ p.complaint {
 
 /* Style for the edit button */
 .edit-icon {
-  position: absolute;
-  left: 1500px;
-  top: 1px;
   background-color: transparent; /* No background color */
   border: none; /* Remove default border */
   cursor: pointer;

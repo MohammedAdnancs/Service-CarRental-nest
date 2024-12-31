@@ -253,20 +253,23 @@ const DetailsPage = () => {
         </div>
       )}
 
-      <div className="reviews-section">
-        <h2>Reviews</h2>
-        {reviews.length > 0 ? (
-          reviews.map((review, index) => (
-            <div key={index} className="review-card">
-              <p><strong>User:</strong> {review.useremail}</p>
-              <p><strong>Review:</strong> {review.Review}</p>
-              <p><strong>Rating:</strong> {'⭐'.repeat(review.rating)}</p>
-            </div>
-          ))
-        ) : (
-          <p>No reviews yet. Be the first to add one!</p>
-        )}
-      </div>
+<div className="reviews-section">
+  <h2>Reviews</h2>
+  {reviews.length > 0 ? (
+    reviews
+      .filter((review) => review.productId === car._id) // Filter reviews by carId
+      .map((review, index) => (
+        <div key={index} className="review-card">
+          <p><strong>User:</strong> {review.useremail}</p>
+          <p><strong>Review:</strong> {review.Review}</p>
+          <p><strong>Rating:</strong> {'⭐'.repeat(review.rating)}</p>
+        </div>
+      ))
+  ) : (
+    <p>No reviews yet. Be the first to add one!</p>
+  )}
+</div>
+
     </div>
   );
 };
