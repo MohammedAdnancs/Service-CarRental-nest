@@ -6,7 +6,7 @@ export declare class CarController {
     create(createCarDto: Car): Promise<Car>;
     findAll(): Promise<Car[]>;
     findOne(id: string): Promise<Car>;
-    update(id: string, updateCarDto: Car): Promise<Car>;
+    update(id: string, updateCarDto: Car, files: Express.Multer.File[]): Promise<Car>;
     remove(id: string): Promise<any>;
     uploadCar(files: Express.Multer.File[], carData: Car): Promise<Car>;
 }

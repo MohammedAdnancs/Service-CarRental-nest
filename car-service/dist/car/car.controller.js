@@ -32,7 +32,11 @@ let CarController = class CarController {
     async findOne(id) {
         return this.carService.findOne(id);
     }
-    async update(id, updateCarDto) {
+    async update(id, updateCarDto, files) {
+        if (files && files.length > 0) {
+            const filePaths = files.map((file) => `/uploads/${file.filename}`);
+            updateCarDto.pictures = filePaths;
+        }
         return this.carService.update(id, updateCarDto);
     }
     async remove(id) {
@@ -67,10 +71,20 @@ __decorate([
 ], CarController.prototype, "findOne", null);
 __decorate([
     (0, common_1.Put)(':id'),
+    (0, common_1.UseInterceptors)((0, platform_express_1.FilesInterceptor)('files', 1, {
+        storage: (0, multer_1.diskStorage)({
+            destination: 'C:/Users/medoa/Desktop/Car-Rental-Nest-database/car-rental-frontend/public/uploads',
+            filename: (req, file, callback) => {
+                const uniqueFilename = `${(0, uuid_1.v4)()}${(0, path_1.extname)(file.originalname)}`;
+                callback(null, uniqueFilename);
+            },
+        }),
+    })),
     __param(0, (0, common_1.Param)('id')),
     __param(1, (0, common_1.Body)()),
+    __param(2, (0, common_1.UploadedFiles)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, Object]),
+    __metadata("design:paramtypes", [String, Object, Array]),
     __metadata("design:returntype", Promise)
 ], CarController.prototype, "update", null);
 __decorate([
@@ -84,7 +98,7 @@ __decorate([
     (0, common_1.Post)('upload'),
     (0, common_1.UseInterceptors)((0, platform_express_1.FilesInterceptor)('files', 5, {
         storage: (0, multer_1.diskStorage)({
-            destination: 'C:/Users/LENOVO/Desktop/Service-CarRental-nest/car-rental-frontend/public/uploads',
+            destination: 'C:/Users/medoa/Desktop/Car-Rental-Nest-database/car-rental-frontend/public/uploads',
             filename: (req, file, callback) => {
                 const uniqueFilename = `${(0, uuid_1.v4)()}${(0, path_1.extname)(file.originalname)}`;
                 callback(null, uniqueFilename);

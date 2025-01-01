@@ -37,20 +37,10 @@ import {
     }
   
     @Put(':id')
-    async update(@Param('id') id: string, @Body() updateCarDto: Car): Promise<Car> {
-      return this.carService.update(id, updateCarDto);
-    }
-  
-    @Delete(':id')
-    async remove(@Param('id') id: string): Promise<any> {
-      return this.carService.delete(id);
-    }
-  
-    @Post('upload')
 @UseInterceptors(
   FilesInterceptor('files', 5, {
     storage: diskStorage({
-      destination: 'C:/Users/LENOVO/Desktop/Service-CarRental-nest/car-rental-frontend/public/uploads', // Save in the public/uploads folder
+      destination: 'C:/Users/medoa/Desktop/Car-Rental-Nest-database/car-rental-frontend/public/uploads',
       filename: (req, file, callback) => {
         const uniqueFilename = `${uuidv4()}${extname(file.originalname)}`;
         callback(null, uniqueFilename);
@@ -58,6 +48,40 @@ import {
     }),
   }),
 )
+async update(
+  @Param('id') id: string, 
+  @Body() updateCarDto: Car, 
+  @UploadedFiles() files: Express.Multer.File[],
+): Promise<Car> {
+  console.log('Uploaded files:', files);
+
+  if (files && files.length > 0) {
+    const filePaths = files.map((file) => `/uploads/${file.filename}`);
+    console.log('Mapped file paths:', filePaths);
+    updateCarDto.pictures = filePaths; // Assuming 'pictures' is an array of strings
+  }
+
+  return this.carService.update(id, updateCarDto);
+}
+  
+    @Delete(':id')
+    async remove(@Param('id') id: string): Promise<any> {
+      return this.carService.delete(id);
+}
+
+@Post('upload')
+@UseInterceptors(
+  FilesInterceptor('files', 5, {
+    storage: diskStorage({
+      destination: 'C:/Users/medoa/Desktop/Car-Rental-Nest-database/car-rental-frontend/public/uploads', // Save in the public/uploads folder
+      filename: (req, file, callback) => {
+        const uniqueFilename = `${uuidv4()}${extname(file.originalname)}`;
+        callback(null, uniqueFilename);
+      },
+    }),
+  }),
+)
+
 async uploadCar(
   @UploadedFiles() files: Express.Multer.File[],
   @Body() carData: Car,
@@ -69,5 +93,5 @@ async uploadCar(
   // Save car data to the database
   return this.carService.create(carData);
 }
-  }
+}
   
