@@ -10,5 +10,5 @@ exports.CarSchema = new mongoose_1.Schema({
     seller: { type: String, required: true },
     pictures: { type: [String], default: [] }
 });
-exports.CarModel = (0, mongoose_1.model)('CarSchema', exports.CarSchema);
+exports.CarModel = (0, mongoose_1.model)('Car', exports.CarSchema);
 //# sourceMappingURL=car.model.js.map

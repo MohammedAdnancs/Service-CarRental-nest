@@ -1,11 +1,12 @@
 import { Schema, Document } from 'mongoose';
 export interface Car extends Document {
-    readonly name: string;
-    readonly type: string;
-    readonly price: number;
-    readonly description: string;
-    readonly seller: string;
-    readonly pictures: string[];
+    name: string;
+    type: string;
+    price: number;
+    description: string;
+    seller: string;
+    y: any;
+    pictures: string[];
 }
 export declare const CarSchema: Schema<any, import("mongoose").Model<any, any, any, any, any, any>, {}, {}, {}, {}, import("mongoose").DefaultSchemaOptions, {
     name: string;

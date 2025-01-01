@@ -17,6 +17,8 @@ const DetailsPage = () => {
   // Retrieve user data from session storage
   const user = JSON.parse(sessionStorage.getItem('userProfile'));
 
+  //const UploadPath = "C:/User/LENOVO/Desktop/Service-CarRental-nest/car-service";
+
   // Fetch car details and reviews on component load
   useEffect(() => {
     const fetchCarDetails = async () => {
@@ -172,14 +174,14 @@ const DetailsPage = () => {
           {car.pictures.map((picture, index) => (
             <img
               key={index}
-              src={picture}
-              alt={`${car.name} - ${index + 1}`}
+              src={`${picture}`}
+              alt={`${picture}`}
               className="details-image"
             />
           ))}
         </div>
+        
       )}
-
       <button className="details-button" onClick={() => window.history.back()}>
         Back
       </button>

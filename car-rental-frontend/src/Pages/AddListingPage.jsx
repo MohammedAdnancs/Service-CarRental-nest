@@ -16,6 +16,8 @@ const AddListingPage = () => {
     seller: user ? user.username : '', // Seller is fetched from session storage
   });
 
+  const [selectedFiles, setSelectedFiles] = useState([]); // Store selected files
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -24,22 +26,38 @@ const AddListingPage = () => {
     });
   };
 
+  const handleFileChange = (e) => {
+    setSelectedFiles(e.target.files); // Store the selected files
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    // Create a new FormData object to handle files and text fields
+    const formDataToSend = new FormData();
+    formDataToSend.append('name', formData.name);
+    formDataToSend.append('type', formData.type);
+    formDataToSend.append('price', formData.price);
+    formDataToSend.append('description', formData.description);
+    formDataToSend.append('seller', formData.seller);
+
+    // Append all selected files to FormData
+    if (selectedFiles.length > 0) {
+      Array.from(selectedFiles).forEach((file) => {
+        formDataToSend.append('files', file); // Use 'files' as the field name
+      });
+    }
+
     try {
       // Send the form data to the backend
-      const response = await fetch('http://localhost:3004/Car', {
+      const response = await fetch('http://localhost:3004/car/upload', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
+        body: formDataToSend, // Send FormData
       });
 
       if (response.ok) {
         alert('Listing added successfully!');
-        navigate('/'); // Redirect to home page after successful submission
+        navigate('/'); // Redirect to the home page after successful submission
       } else {
         alert('Failed to add listing. Please try again.');
       }
@@ -103,6 +121,16 @@ const AddListingPage = () => {
             value={formData.seller}
             readOnly
             className="readonly-input"
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="images">Upload Images:</label>
+          <input
+            type="file"
+            id="images"
+            name="images"
+            multiple
+            onChange={handleFileChange}
           />
         </div>
         <button type="submit" className="submit-btn">

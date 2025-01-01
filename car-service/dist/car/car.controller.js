@@ -14,6 +14,10 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CarController = void 0;
 const common_1 = require("@nestjs/common");
+const platform_express_1 = require("@nestjs/platform-express");
+const multer_1 = require("multer");
+const path_1 = require("path");
+const uuid_1 = require("uuid");
 const car_service_1 = require("./car.service");
 let CarController = class CarController {
     constructor(carService) {
@@ -33,6 +37,11 @@ let CarController = class CarController {
     }
     async remove(id) {
         return this.carService.delete(id);
+    }
+    async uploadCar(files, carData) {
+        const filePaths = files.map((file) => `/uploads/${file.filename}`);
+        carData.pictures = filePaths;
+        return this.carService.create(carData);
     }
 };
 exports.CarController = CarController;
@@ -71,6 +80,23 @@ __decorate([
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)
 ], CarController.prototype, "remove", null);
+__decorate([
+    (0, common_1.Post)('upload'),
+    (0, common_1.UseInterceptors)((0, platform_express_1.FilesInterceptor)('files', 5, {
+        storage: (0, multer_1.diskStorage)({
+            destination: 'C:/Users/LENOVO/Desktop/Service-CarRental-nest/car-rental-frontend/public/uploads',
+            filename: (req, file, callback) => {
+                const uniqueFilename = `${(0, uuid_1.v4)()}${(0, path_1.extname)(file.originalname)}`;
+                callback(null, uniqueFilename);
+            },
+        }),
+    })),
+    __param(0, (0, common_1.UploadedFiles)()),
+    __param(1, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Array, Object]),
+    __metadata("design:returntype", Promise)
+], CarController.prototype, "uploadCar", null);
 exports.CarController = CarController = __decorate([
     (0, common_1.Controller)('car'),
     __metadata("design:paramtypes", [car_service_1.CarService])

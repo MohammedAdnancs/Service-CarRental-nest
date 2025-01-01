@@ -1,13 +1,13 @@
 /* eslint-disable prettier/prettier */
-import { Schema, Document, model, Double } from 'mongoose';
+import { Schema, Document, model } from 'mongoose';
 
 export interface Car extends Document {
-  readonly name: string;
-  readonly type: string;
-  readonly price: number;
-  readonly description: string;
-  readonly seller: string;
-  readonly pictures: string[];  
+  name: string; 
+  type: string; 
+  price: number; 
+  description: string; 
+  seller: string; y
+  pictures: string[]; 
 }
 
 export const CarSchema = new Schema({
@@ -19,4 +19,4 @@ export const CarSchema = new Schema({
   pictures: { type: [String], default: [] }
 });
 
-export const CarModel = model<Car>('CarSchema', CarSchema);
+export const CarModel = model<Car>('Car', CarSchema);

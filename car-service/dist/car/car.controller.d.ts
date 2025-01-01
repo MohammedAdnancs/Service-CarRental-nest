@@ -8,4 +8,5 @@ export declare class CarController {
     findOne(id: string): Promise<Car>;
     update(id: string, updateCarDto: Car): Promise<Car>;
     remove(id: string): Promise<any>;
+    uploadCar(files: Express.Multer.File[], carData: Car): Promise<Car>;
 }
