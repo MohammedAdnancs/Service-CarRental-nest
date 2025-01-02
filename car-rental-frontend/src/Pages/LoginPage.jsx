@@ -32,7 +32,7 @@ const LoginPage = () => {
             birthdate: data.userProfile.birthday,
             nationalId: data.userProfile.national_id,
             email: data.userProfile.email,
-            phoneNumber: data.userProfile.phonenumber,
+            phonenumbers: data.userProfile.phonenumbers,
           }));
     
           // Optional: Navigate to another page (e.g., dashboard)

@@ -2,19 +2,26 @@ import React, { useState } from 'react';
 import './SignupPage.css'; // Import the CSS file
 import Button from '../components/Button/Button'; // Import the Button component
 import TextInputfield from '../components/Text_inputfield/TextInputfiled'; // Import the TextInputfield component
+
 const SignupPage = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
   const [birthday, setBirthday] = useState('');
-  const [phonenumber, setPhonenumber] = useState('');
+  const [phonenumbers, setPhonenumbers] = useState(['', '']); // Array for two phone numbers
   const [national_id, setNational_id] = useState('');
   const [error, setError] = useState(null);
   const [successModal, setSuccessModal] = useState(false); // State for modal visibility
 
+  const handlePhoneNumberChange = (index, value) => {
+    const updatedNumbers = [...phonenumbers];
+    updatedNumbers[index] = value;
+    setPhonenumbers(updatedNumbers);
+  };
+
   const handleSignup = async (e) => {
     e.preventDefault(); // Prevent the default form submission behavior
-    
+
     try {
       const response = await fetch('http://localhost:3002/user/register', {
         method: 'POST',
@@ -26,7 +33,7 @@ const SignupPage = () => {
           password,
           username,
           birthday,
-          phonenumber,
+          phonenumbers, // Send the array of phone numbers
           national_id,
         }),
       });
@@ -39,18 +46,16 @@ const SignupPage = () => {
         setError(null);
 
         // Optionally, reset the fields
-        setUsername('');
-        setPassword('');
-        setEmail('');
-        setBirthday('');
-        setNational_id('');
-        setPhonenumber('');
-
+        setUsername(null);
+        setPassword(null);
+        setEmail(null);
+        setBirthday(null);
+        setNational_id(null);
+        setPhonenumbers([null, null]);
       } else {
         const errorData = await response.json();
         setError(errorData.message || 'Failed to register user.');
       }
-      console.log(username, password, email, birthday, phonenumber, national_id);
     } catch (err) {
       setError('An error occurred while registering the user.');
     }
@@ -66,7 +71,6 @@ const SignupPage = () => {
       {error && <p className="error">{error}</p>}
       <form onSubmit={handleSignup}>
         <div className="form-group">
-          
           <TextInputfield
             type="email"
             placeholder="Enter your Email"
@@ -77,7 +81,6 @@ const SignupPage = () => {
           />
         </div>
         <div className="form-group">
-          
           <TextInputfield
             type="text"
             placeholder="Enter your Username"
@@ -88,21 +91,28 @@ const SignupPage = () => {
           />
         </div>
         <div className="form-group">
-          
           <TextInputfield
             type="text"
-            placeholder="Enter your Phonenumber"
-            id="phonenumber"
-            value={phonenumber}
-            onChange={(e) => setPhonenumber(e.target.value)}
+            placeholder="Enter your First Phone Number"
+            id="phonenumber1"
+            value={phonenumbers[0]}
+            onChange={(e) => handlePhoneNumberChange(0, e.target.value)}
             required
           />
         </div>
         <div className="form-group">
-          
+          <TextInputfield
+            type="text"
+            placeholder="Enter your Second Phone Number (optional)"
+            id="phonenumber2"
+            value={phonenumbers[1]}
+            onChange={(e) => handlePhoneNumberChange(1, e.target.value)}
+          />
+        </div>
+        <div className="form-group">
           <TextInputfield
             type="date"
-            placeholder="Enter your Birthday"
+            placeholder="Enter your Birthday (optional)"
             id="birthday"
             value={birthday}
             onChange={(e) => setBirthday(e.target.value)}
@@ -110,7 +120,6 @@ const SignupPage = () => {
           />
         </div>
         <div className="form-group">
-         
           <TextInputfield
             type="text"
             placeholder="Enter your National ID"
@@ -121,7 +130,6 @@ const SignupPage = () => {
           />
         </div>
         <div className="form-group">
-          
           <TextInputfield
             placeholder="Enter your Password"
             type="password"
@@ -131,7 +139,14 @@ const SignupPage = () => {
             required
           />
         </div>
-        <Button  color= "#white" backgroundColor="#555" width="100%" height="5dvh" type="submit" text="SignUp" />
+        <Button
+          color="#white"
+          backgroundColor="#555"
+          width="100%"
+          height="5dvh"
+          type="submit"
+          text="SignUp"
+        />
       </form>
 
       {/* Modal to display success message */}

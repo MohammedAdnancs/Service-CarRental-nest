@@ -8,10 +8,10 @@ export class UserController {
 
   // Register a new user
   @Post('register')
-  async register(@Body() body: { email: string; password: string ,username:string , birthday:Date , phonenumber:string, national_id:string}): Promise<any> {
+  async register(@Body() body: { email: string; password: string ,username:string , birthday:Date , phonenumbers:string[], national_id:string}): Promise<any> {
     console.log(body.email)
     console.log(body.password)
-    const newUser = await this.userService.signUpUser(body.email, body.password ,body.username , body.birthday , body.phonenumber, body.national_id);
+    const newUser = await this.userService.signUpUser(body.email, body.password ,body.username , body.birthday , body.phonenumbers, body.national_id);
     return {user: newUser };
   }
 

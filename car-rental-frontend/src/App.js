@@ -9,7 +9,8 @@ import AddListing from './Pages/AddListingPage';
 import CartPage from './Pages/CartPage';
 import ComplainPage from './Pages/ComplainPage';
 import ReviewForm from './Pages/ReviewPage'
-const AddReview = () => <h1>Add Review</h1>;
+import ProfilePage from './Pages/ProfilePage';
+
 
 const App = () => {
   return (
@@ -25,6 +26,7 @@ const App = () => {
           <Route path="/Signup" element={<SignupPage  />} />
           <Route path="/Login" element={<LoginPage  />} />
           <Route path="/cart" element={<CartPage />} />
+          <Route path="/Profile" element={<ProfilePage />} />
         </Routes>
       </div>
     </Router>

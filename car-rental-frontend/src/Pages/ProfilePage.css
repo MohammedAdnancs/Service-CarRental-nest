@@ -1,0 +1,82 @@
+.profile-container {
+    max-width: 600px;
+    margin: auto;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    background-color: #f0f4f8; /* Light background */
+    border-radius: 15px; /* Rounded edges */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+  }
+  
+  .profile-title {
+    text-align: center;
+    color: #333;
+    font-size: 2rem; /* Larger font size for the title */
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-transform: uppercase; /* Uppercase for a bold statement */
+  }
+  
+  .profile-card {
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background: #fff; /* White background for contrast */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Soft shadow */
+    transition: transform 0.2s ease-in-out; /* Smooth hover effect */
+  }
+  
+  .profile-card:hover {
+    transform: scale(1.02); /* Slight zoom on hover */
+  }
+  
+  .profile-card p {
+    margin: 10px 0; /* Spacing between lines */
+    color: #555; /* Softer text color */
+    font-size: 1rem; /* Standard font size */
+    line-height: 1.6; /* Comfortable line spacing */
+  }
+  
+  .profile-card p strong {
+    color: #000; /* Emphasize strong tags */
+  }
+  
+  .profile-card p:last-child {
+    margin-bottom: 0; /* Remove margin for the last paragraph */
+  }
+  
+  .profile-card p span {
+    color: #0073e6; /* Add color to dynamic data */
+  }
+  
+  button {
+    display: block;
+    margin: 20px auto 0;
+    padding: 10px 20px;
+    background-color: #0073e6; /* Primary button color */
+    color: #fff; /* White text */
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+  }
+  
+  button:hover {
+    background-color: #005bb5; /* Darker shade on hover */
+  }
+  
+  @media screen and (max-width: 768px) {
+    .profile-container {
+      padding: 15px;
+    }
+  
+    .profile-title {
+      font-size: 1.5rem;
+    }
+  
+    .profile-card {
+      padding: 15px;
+    }
+  }
+  

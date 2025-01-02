@@ -33,8 +33,10 @@ let CarController = class CarController {
         return this.carService.findOne(id);
     }
     async update(id, updateCarDto, files) {
+        console.log('Uploaded files:', files);
         if (files && files.length > 0) {
             const filePaths = files.map((file) => `/uploads/${file.filename}`);
+            console.log('Mapped file paths:', filePaths);
             updateCarDto.pictures = filePaths;
         }
         return this.carService.update(id, updateCarDto);
@@ -71,7 +73,7 @@ __decorate([
 ], CarController.prototype, "findOne", null);
 __decorate([
     (0, common_1.Put)(':id'),
-    (0, common_1.UseInterceptors)((0, platform_express_1.FilesInterceptor)('files', 1, {
+    (0, common_1.UseInterceptors)((0, platform_express_1.FilesInterceptor)('files', 5, {
         storage: (0, multer_1.diskStorage)({
             destination: 'C:/Users/medoa/Desktop/Car-Rental-Nest-database/car-rental-frontend/public/uploads',
             filename: (req, file, callback) => {

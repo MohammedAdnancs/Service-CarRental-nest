@@ -25,7 +25,7 @@ export class UserService {
           console.log(userProfile.email);
           console.log(userProfile.username);
           console.log(userProfile.birthday);
-          console.log(userProfile.phonenumber);
+          console.log(userProfile.phonenumbers);
           console.log(userProfile.national_id);
           return userProfile;
         }
@@ -35,7 +35,7 @@ export class UserService {
       }
   }
 
-  async signUpUser(email: string, password: string ,username:string , birthday:Date , phonenumber:string, national_id:string): Promise<any> {
+  async signUpUser(email: string, password: string ,username:string , birthday:Date , phonenumbers:string[], national_id:string): Promise<any> {
     try {
         // Send an HTTP POST request to the AuthenticationService sign-up endpoint
         const response: AxiosResponse<any> = await this.httpService
@@ -43,7 +43,7 @@ export class UserService {
           .toPromise(); 
 
         if(response.data){
-          const newUserProfile = new this.UserModel({ email: email,username:username , birthday:birthday , phonenumber:phonenumber, national_id:national_id});
+          const newUserProfile = new this.UserModel({ email: email,username:username , birthday:birthday , phonenumbers:phonenumbers, national_id:national_id});
           await newUserProfile.save();
           return newUserProfile;
         }
